@@ -3,6 +3,7 @@ package src.model.cards;
 import java.rmi.activation.ActivationException;
 
 import src.model.PlayerModel;
+import src.model.characters.CharacterImpl;
 
 /**
  * This interface outlines the basic functions and enums that a non-character card should have.
@@ -42,5 +43,13 @@ public interface CardModelState {
      * @throws ActivationException If the effect cannot trigger.
      */
     void use(PlayerModel player) throws ActivationException;
+
+    /**
+     * This method applies the card's effect from the given player to the given target.
+     * @param player The player the card will effect.
+     * @param target The targeted character.
+     * @throws ActivationException If the effect cannot trigger.
+     */
+    void use(PlayerModel player, CharacterImpl target) throws ActivationException;
 
 }

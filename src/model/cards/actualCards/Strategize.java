@@ -4,6 +4,7 @@ import java.rmi.activation.ActivationException;
 
 import src.model.PlayerModel;
 import src.model.cards.SupportCardModel;
+import src.model.characters.CharacterImpl;
 
 /**
  * The class representing the Strategize card
@@ -33,6 +34,11 @@ public class Strategize extends SupportCardModel {
      */
     public void use(PlayerModel player) {
         player.draw(2);
+    }
+
+    @Override
+    public void use(PlayerModel player, CharacterImpl target) throws ActivationException {
+        this.use(player);
     }
     
 }

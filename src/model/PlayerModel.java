@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.rmi.activation.ActivationException;
 import java.util.EmptyStackException;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import src.model.cards.CardModelState;
@@ -18,10 +19,11 @@ public class PlayerModel {
     private Stack<CardModelState> deck;
     private List<CardModelState> hand; // This has a limit of 10
     final CharacterImpl[] CHARACTERS; // This has a limit of 3, and is unchangeable
+    final int id;
     private int inPlayChar;
     private PrintStream logger;
 
-    public PlayerModel(CardModelState[] deck, CharacterImpl c1, CharacterImpl c2, CharacterImpl c3) {
+    public PlayerModel(CardModelState[] deck, CharacterImpl c1, CharacterImpl c2, CharacterImpl c3, int ID, PrintStream logger) {
         this.deck = new Stack<CardModelState>();
         for (CardModelState card : deck) {
             this.deck.push(card);
@@ -31,7 +33,34 @@ public class PlayerModel {
         }
         this.CHARACTERS = new CharacterImpl[]{c1, c2, c3};
         this.inPlayChar = 0;
+        this.logger = logger;
+        this.id = ID;
+    }
+
+    public PlayerModel(CardModelState[] deck, CharacterImpl c1, CharacterImpl c2, CharacterImpl c3) {
+        Random rand = new Random();
+        this.deck = new Stack<CardModelState>();
+        for (CardModelState card : deck) {
+            this.deck.push(card);
+        }
+        for (int i = 0; i < 5; i++) {
+            this.hand.add(this.deck.pop());
+        }
+        this.id = rand.nextInt(100);
+        this.CHARACTERS = new CharacterImpl[]{c1, c2, c3};
+        this.inPlayChar = 0;
         this.logger = System.out;
+    }
+
+    public int pID() {
+        return this.id;
+    }
+
+    /**
+     * Returns the in-play character this player has.
+     */
+    public CharacterImpl getCharInPlay() {
+        return this.CHARACTERS[this.inPlayChar];
     }
 
     /**
