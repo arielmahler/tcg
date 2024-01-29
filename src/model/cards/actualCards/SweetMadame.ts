@@ -1,7 +1,6 @@
 import IllegalPlayError, { FULL_CHARACTER, ILLEGAL_CHARACTER } from "../../../types/IllegalPlayError";
-import { Elements } from "../../../types/tcgTypes";
-import { PlayerModel } from "../../PlayerModel";
-import { CharacterImpl } from "../../characters/CharacterImpl";
+import { Elements, Character } from "../../../types/tcgTypes";
+import Player from '../../../lib/Player'
 import { SupportCardModel } from "../SupportCardModel";
 
 
@@ -25,7 +24,7 @@ export class SweetMadame extends SupportCardModel {
             isAligned);
     }
 
-    use(player: PlayerModel, target: CharacterImpl): void {
+    use(player: Player, target: Character): void {
         // If the character does not belong to the player, fail.
         if (target.owner != player.pID) {
             throw new IllegalPlayError(ILLEGAL_CHARACTER);
